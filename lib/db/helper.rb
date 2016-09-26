@@ -21,4 +21,18 @@ module Helper
 
     FileUtils.cp(fetch(:db_local_dump), staged_file)
   end
+
+  def self.local_stage?
+    fetch(:local_stage_name).to_sym == fetch(:stage).to_sym
+  end
+
+  def execute_local_or_remote(cmd)
+    if local_stage?
+      run_locally do
+        execute cmd
+      end
+    else
+      execute cmd
+    end
+  end
 end

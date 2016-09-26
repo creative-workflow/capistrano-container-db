@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name        = 'capistrano-container-db'
-  spec.version     = '0.0.1'
+  spec.version     = '0.0.2'
   spec.date        = '2016-09-26'
   spec.summary     = 'Helps managing databases on local and remote stages, also on remote docker container'
   spec.description = spec.summary
@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'capistrano', '>= 3.0.0.pre'
-  spec.add_dependency 'capistrano-container', '>= 0.0.4'
+  spec.add_dependency 'capistrano-container', '>= 0.0.5'
   spec.add_development_dependency 'bundler', '~> 1.3'
   spec.add_development_dependency 'rake', '~> 10.1'
 end

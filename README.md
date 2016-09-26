@@ -74,13 +74,18 @@ set :db_remote_dump, '/tmp/dump.sql'
 set :db_local_dump, 'config/db/dump.sql'
 set :db_is_container, false
 set :db_container_name, 'db'
+set :local_stage_name, :local
+set :filter_on_import, lambda{ |sql_dump| return sql_dump }
 ```
 
 ## TODO
-  * Implement provider pattern for other db engines.
+  * Implement adapter pattern for other db engines.
   * Write tests.
 
 ## Changes
+### Version 0.0.2
+  * autodetect local and remote container
+
 ### Version 0.0.1
   * Initial release
 

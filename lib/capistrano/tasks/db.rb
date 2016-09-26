@@ -6,10 +6,10 @@ namespace :db do
   desc "export a local, remote or remote container mysql db"
   task :export do
     on roles(:db, :container_host) do |host|
-
       if fetch(:db_is_container)
+        raise 'huhu!'
         DumpHelper::dump_on_container_and_download container_by_name(fetch(:db_container_name))
-      elsif fetch(:stage) == :local
+      elsif Helper::local_stage?
         DumpHelper::dump_on_local
       else
         DumpHelper::dump_on_server_and_download
@@ -24,7 +24,7 @@ namespace :db do
     on roles(:db, :container_host) do
       if fetch(:db_is_container)
         LoadHelper::import_on_container container_by_name(fetch(:db_container_name))
-      elsif fetch(:stage) == :local
+      elsif Helper::local_stage?
         LoadHelper::import_on_local
       else
         LoadHelper::import_on_server
@@ -42,5 +42,7 @@ namespace :load do
     set :db_local_dump, 'config/db/dump.sql'
     set :db_is_container, false
     set :db_container_name, 'db'
+    set :local_stage_name, :local
+    set :filter_on_import, lambda{ |sql_dump| return sql_dump }
   end
 end
