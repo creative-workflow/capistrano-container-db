@@ -7,7 +7,6 @@ namespace :db do
   task :export do
     on roles(:db, :container_host) do |host|
       if fetch(:db_is_container)
-        raise 'huhu!'
         DumpHelper::dump_on_container_and_download container_by_name(fetch(:db_container_name))
       elsif Helper::local_stage?
         DumpHelper::dump_on_local

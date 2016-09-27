@@ -83,6 +83,9 @@ set :filter_on_import, lambda{ |sql_dump| return sql_dump }
   * Write tests.
 
 ## Changes
+### Version 0.0.3
+  * remove debug expression
+
 ### Version 0.0.2
   * autodetect local and remote container
 
