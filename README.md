@@ -8,7 +8,7 @@ This gem depends on [capistrano-container](https://github.com/creative-workflow/
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this line to your application's `Gemfile` (make sure you have installed ruby and bundler ;):
 
 ```ruby
 gem 'capistrano', '>= 3.0.0'
@@ -31,19 +31,18 @@ require 'capistrano/container/db'
 
 ## Usage
 ### definition
-To define and register a container do the following in your stage config or deploy.rb:
+Define and register a container by doing the following in your `deploy.rb` (or `[stage].rb`):
 
 ```ruby
 ...
 
-# for usage in conjunction with capistrano-container
-server('www.example.com', user: 'root', roles: %w{web})
+server 'www.example.com', user: 'root', roles: %w{web}
 
 container 'db',  roles: %w{db},
                  container_id: 'website_company_beta_db',
                  server: ['www.example.com']
-
-# here the capistrano-container-db config comes
+                 
+# here is the capistrano-container-db config you need
 
 set :db_is_container, true
 set :db_user, 'wordpress'
@@ -53,11 +52,9 @@ set :db_name, 'my_wordpress_db_inside_docker'
 ...
 ```
 
-This configures the db access for the db container. If 'db_is_container' is true, the gem uses the capistrano-container extension to select the container by name 'fetch(:db_container_name)' (defaults to 'db').
+This configures the db access for the db container. If `db_is_container` is true, the gem uses the `capistrano-container` extension to select the container by name `fetch(:db_container_name)` (defaults to 'db').
 
-If the stage name is equal ':local', the gem runs export/import on local host.
-
-If the stage is unequal ':local' and the param ':db_is_container' is false, the export/import will run on remote host.
+If the stage name is equal `:local`, export/import tasks will run on your local host (no matter if it's a dockaer container or local mysql installation).
 
 ### commandline tasks
 ```ruby
@@ -75,12 +72,12 @@ set :db_local_dump, 'config/db/dump.sql'
 set :db_is_container, false
 set :db_container_name, 'db'
 set :local_stage_name, :local
-set :filter_on_import, lambda{ |sql_dump| return sql_dump }
+set :filter_on_import, lambda{ |sql_dump| return sql_dump } -> !not implemented yet
 ```
 
 ## TODO
-  * Implement adapter pattern for other db engines.
-  * Write tests.
+  * adapter pattern for other db engines.
+  * integration tests.
 
 ## Changes
 ### Version 0.0.3
@@ -90,7 +87,7 @@ set :filter_on_import, lambda{ |sql_dump| return sql_dump }
   * autodetect local and remote container
 
 ### Version 0.0.1
-  * Initial release
+  * initial release
 
 ## Contributing
 
