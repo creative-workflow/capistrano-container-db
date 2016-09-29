@@ -52,7 +52,7 @@ set :db_name, 'my_wordpress_db_inside_docker'
 ...
 ```
 
-This configures the db access for the db container. If `db_is_container` is true, the gem uses the `capistrano-container` extension to select the container by name `fetch(:db_container_name)` (defaults to 'db').
+This configures the db access for the db container. If `:db_is_container` is true, the gem uses the `capistrano-container` extension to select the container by name `fetch(:db_container_name)` (defaults to 'db').
 
 If the stage name is equal `:local`, export/import tasks will run on your local host (no matter if it's a dockaer container or local mysql installation).
 
