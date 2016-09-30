@@ -56,6 +56,8 @@ This configures the db access for the db container. If `:db_is_container` is tru
 
 If the stage name is equal `:local`, export/import tasks will run on your local host (no matter if it's a dockaer container or local mysql installation).
 
+Dont forget to add a server (even for local stage) with the role `db`. `server 'localhost', user: 'any', roles: %w{web db php}`
+
 ### commandline tasks
 ```ruby
 cap db:export               # export a local, remote or remote container mysql db
