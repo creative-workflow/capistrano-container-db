@@ -41,7 +41,7 @@ server 'www.example.com', user: 'root', roles: %w{web}
 container 'db',  roles: %w{db},
                  container_id: 'website_company_beta_db',
                  server: ['www.example.com']
-                 
+
 # here is the capistrano-container-db config you need
 
 set :db_is_container, true
@@ -82,6 +82,9 @@ set :filter_on_import, lambda{ |sql_dump| return sql_dump } -> !not implemented 
   * integration tests.
 
 ## Changes
+### Version 0.0.4
+  * readme
+  
 ### Version 0.0.3
   * remove debug expression
 
