@@ -62,6 +62,7 @@ Dont forget to add a server (even for local stage) with the role `db`. `server '
 ```ruby
 cap db:export               # export a local, remote or remote container mysql db
 cap db:import               # import a local, remote or remote container mysql db
+cap db:execute              # execute a mysql command local, remote or container host
 ```
 
 ### default configuration
@@ -86,6 +87,7 @@ set :filter_on_import, lambda{ |sql_dump| return sql_dump } -> !not implemented 
   * adapter pattern for other db engines.
   * integration tests.
   * :filter_on_import
+  * add db:execute task
 
 ## Changes
 ### Version 0.0.5
