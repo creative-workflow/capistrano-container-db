@@ -68,7 +68,12 @@ cap db:import               # import a local, remote or remote container mysql d
 ```ruby
 set :db_user, 'root'
 set :db_pass, ''
+set :db_additional_auth_args, []
 set :db_name, ''
+set :db_additional_restore_args, []
+# dont use --database statement, so no use '...' will be generated and we
+# can have different db names local and remote
+set :db_additional_dump_args, ['--no-create-db']
 set :db_remote_dump, '/tmp/dump.sql'
 set :db_local_dump, 'config/db/dump.sql'
 set :db_is_container, false
@@ -80,11 +85,16 @@ set :filter_on_import, lambda{ |sql_dump| return sql_dump } -> !not implemented 
 ## TODO
   * adapter pattern for other db engines.
   * integration tests.
+  * :filter_on_import
 
 ## Changes
+### Version 0.0.5
+  * add "CREATE DATABASE IF NOT EXISTS" to import statements
+  * provide additional mysql auth/dump/restore args
+
 ### Version 0.0.4
   * readme
-  
+
 ### Version 0.0.3
   * remove debug expression
 
