@@ -3,6 +3,15 @@ require_relative('../../db/dump_helper.rb')
 require_relative('../../db/load_helper.rb')
 
 namespace :db do
+  desc "execute a mysql command local, remote or container host"
+  task :execute do
+    on roles(:db, :container_host) do |host|
+      ask(:tmp_cmd, "mysql command")
+      Helper.execute_db_command_autodetect fetch(:tmp_cmd)
+    end
+  end
+
+
   desc "export a local, remote or remote container mysql db"
   task :export do
     on roles(:db, :container_host) do |host|
