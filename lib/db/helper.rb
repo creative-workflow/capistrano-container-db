@@ -1,11 +1,22 @@
 module Helper
-  def self.mysql_args(additional_args=[])
+  def self.mysql_dump_args
+    command = mysql_auth_args
+    command+= " #{fetch(:db_additional_dump_args).join(' ')} "
+    command+= " #{fetch(:db_name)}" unless fetch(:db_name).empty?
+    command
+  end
+
+  def self.mysql_restore_args
+    command = mysql_auth_args
+    command+= " #{fetch(:db_additional_restore_args).join(' ')} "
+    command+= " #{fetch(:db_name)}" unless fetch(:db_name).empty?
+    command
+  end
+
+  def self.mysql_auth_args
     command = " -u #{fetch(:db_user)}"
     command+= " -p#{fetch(:db_pass)}" unless fetch(:db_pass).empty?
-    command+= " #{additional_args.join(' ')} "
-
-    # dont use --database statement, so no use '...' will be generated
-    command+= " #{fetch(:db_name)}" unless fetch(:db_name).empty?
+    command+= " #{fetch(:db_additional_auth_args).join(' ')} "
     command
   end
 
@@ -26,13 +37,16 @@ module Helper
     fetch(:local_stage_name).to_sym == fetch(:stage).to_sym
   end
 
-  def execute_local_or_remote(cmd)
-    if local_stage?
-      run_locally do
-        execute cmd
+  def self.execute_db_command_autodetect(cmd)
+    cmd = "mysql #{Helper::mysql_auth_args} -e \"#{cmd}\""
+
+    if fetch(:db_is_container)
+      db_container = container_by_name fetch(:db_container_name)
+      on_container db_container do |container|
+        container.execute cmd
       end
     else
-      execute cmd
+      execute_local_or_remote cmd
     end
   end
 end
