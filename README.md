@@ -2,7 +2,7 @@
 
 Helps managing databases on local and remote stages, also on remote [docker](https://www.docker.com/) container for Capistrano 3.x.
 
-This project is in an early stage but helps me alot dealing with my container deployments and keeps my code clean. It is not only ment for mysql, but at the moment there is only support for mysql, feel free to contribute =)
+This project is in an early stage but helps me a lot dealing with my container deployments and keeps my code clean. It is not only meant for mysql, but at the moment there is only support for mysql, feel free to contribute =)
 
 This gem depends on [capistrano-container](https://github.com/creative-workflow/capistrano-container).
 
