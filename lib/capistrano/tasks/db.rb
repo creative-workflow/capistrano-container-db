@@ -7,7 +7,7 @@ namespace :db do
   task :execute do
     on roles(:db, :container_host) do |host|
       ask(:tmp_cmd, "mysql command")
-      Helper.execute_db_command_autodetect fetch(:tmp_cmd)
+      Capistrano::Container::DB::Helper.execute_db_command_autodetect fetch(:tmp_cmd)
     end
   end
 
@@ -16,14 +16,14 @@ namespace :db do
   task :export do
     on roles(:db, :container_host) do |host|
       if fetch(:db_is_container)
-        DumpHelper::dump_on_container_and_download container_by_name(fetch(:db_container_name))
-      elsif Helper::local_stage?
-        DumpHelper::dump_on_local
+        Capistrano::Container::DB::DumpHelper::dump_on_container_and_download container_by_name(fetch(:db_container_name))
+      elsif Capistrano::Container::DB::Helper::local_stage?
+        Capistrano::Container::DB::DumpHelper::dump_on_local
       else
-        DumpHelper::dump_on_server_and_download
+        Capistrano::Container::DB::DumpHelper::dump_on_server_and_download
       end
 
-      Helper::duplicate_local_dump_to_staged_dump
+      Capistrano::Container::DB::Helper::duplicate_local_dump_to_staged_dump
     end
   end
 
@@ -31,11 +31,11 @@ namespace :db do
   task :import do
     on roles(:db, :container_host) do
       if fetch(:db_is_container)
-        LoadHelper::import_on_container container_by_name(fetch(:db_container_name))
-      elsif Helper::local_stage?
-        LoadHelper::import_on_local
+        Capistrano::Container::DB::LoadHelper::import_on_container container_by_name(fetch(:db_container_name))
+      elsif Capistrano::Container::DB::Helper::local_stage?
+        Capistrano::Container::DB::LoadHelper::import_on_local
       else
-        LoadHelper::import_on_server
+        Capistrano::Container::DB::LoadHelper::import_on_server
       end
     end
   end

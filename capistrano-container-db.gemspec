@@ -4,8 +4,8 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name        = 'capistrano-container-db'
-  spec.version     = '0.0.5'
-  spec.date        = '2016-09-30'
+  spec.version     = '0.0.6'
+  spec.date        = '2018-02-03'
   spec.summary     = 'Helps managing databases on local and remote stages, also on remote docker container'
   spec.description = spec.summary
   spec.authors     = ['Tom Hanoldt']

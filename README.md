@@ -90,6 +90,10 @@ set :filter_on_import, lambda{ |sql_dump| return sql_dump } -> !not implemented 
   * add db:execute task
 
 ## Changes
+### Version 0.0.6
+  * use clean module namespaces
+  * add `--lock-tables=false` as default dump arg
+
 ### Version 0.0.5
   * add "CREATE DATABASE IF NOT EXISTS" to import statements
   * provide additional mysql auth/dump/restore args
