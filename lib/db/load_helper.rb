@@ -22,11 +22,13 @@ module Capistrano
         end
 
         def self.import_on_server()
-          upload!(fetch(:db_local_dump), fetch(:db_remote_dump))
+          on roles(:db, :container_host) do |host|
+            upload!(fetch(:db_local_dump), fetch(:db_remote_dump))
 
-          LoadHelper.create_db_if_not_exists fetch(:db_name)
+            LoadHelper.create_db_if_not_exists fetch(:db_name)
 
-          execute("mysql #{Helper::mysql_restore_args} < #{fetch(:db_remote_dump)}")
+            execute("mysql #{Helper::mysql_restore_args} < #{fetch(:db_remote_dump)}")
+          end
         end
 
         def self.create_db_if_not_exists(db)

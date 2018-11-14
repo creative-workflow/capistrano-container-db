@@ -15,9 +15,11 @@ module Capistrano
         def self.dump_on_server_and_download()
           args = Helper::mysql_dump_args
 
-          execute "mysqldump #{args} > #{fetch(:db_remote_dump)}"
+          on roles(:db, :container_host) do |host|
+            execute "mysqldump #{args} > #{fetch(:db_remote_dump)}"
 
-          download!(fetch(:db_remote_dump), fetch(:db_local_dump))
+            download!(fetch(:db_remote_dump), fetch(:db_local_dump))
+          end
         end
 
         def self.dump_on_container_and_download(container)
